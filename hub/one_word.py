@@ -58,10 +58,10 @@ def get_hitokoto_info() -> Union[Dict[str, str], None]:
     """
     try:
         url: str = 'https://v1.hitokoto.cn/'
-        params: Dict[str, str] = {'encode': 'text'}
+        params: Dict[str, str] = {'encode': 'json'}
         resp = requests.get(url, params=params)
         if resp.status_code == 200:
-            return ensure_dict(resp.text)
+            return resp.json()
     except requests.exceptions.RequestException as exception:
         logger.debug(exception)
         return None

@@ -1,4 +1,4 @@
-from utils import save_csv
+from utils import save_csv, CSVModel
 import os
 
 
@@ -7,8 +7,9 @@ def test_caihongpi():
     one_word = get_caihongpi_info
     content = one_word()
     assert content
-    path: str = './.data/test_caihongpi.csv'
-    save_csv(path, content.keys(), [[k for k in content.values()]])
+    path: str = './data/test_caihongpi.csv'
+    model: CSVModel = CSVModel.create_from_dict(content)
+    save_csv(path, model=model)
     assert os.path.exists(path)
 
 
@@ -17,9 +18,10 @@ def test_aiciba():
     one_word = get_acib_info
     content = one_word()
     assert content
-    path: str = './.data/test_aciba.csv'
+    path: str = './data/test_aciba.csv'
 
-    save_csv(path, content.keys(), [[k for k in content.values()]])
+    model: CSVModel = CSVModel.create_from_dict(content)
+    save_csv(path, model=model)
     assert os.path.exists(path)
 
 
@@ -28,9 +30,10 @@ def test_hitokoto():
 
     content = one_word()
     assert content
-    path: str = './.data/test_hitokoto.csv'
+    path: str = './data/test_hitokoto.csv'
 
-    save_csv(path, content.keys(), [[k for k in content.values()]])
+    model: CSVModel = CSVModel.create_from_dict(content)
+    save_csv(path, model=model)
     assert os.path.exists(path)
 
 
@@ -39,9 +42,10 @@ def test_lovelive():
 
     content = one_word()
     assert content
-    path: str = './.data/test_lovelive.csv'
+    path: str = './data/test_lovelive.csv'
 
-    save_csv(path, content.keys(), [[k for k in content.values()]])
+    model: CSVModel = CSVModel.create_from_dict(content)
+    save_csv(path, model=model)
     assert os.path.exists(path)
 
 
@@ -50,7 +54,8 @@ def test_wufazhuce():
 
     content = one_word()
     assert content
-    path: str = './.data/test_wufazhuce.csv'
-    
-    save_csv(path, content.keys(), [[k for k in content.values()]])
+    path: str = './data/test_wufazhuce.csv'
+
+    model: CSVModel = CSVModel.create_from_dict(content)
+    save_csv(path, model=model)
     assert os.path.exists(path)
