@@ -1,6 +1,8 @@
 import csv
 import os
-from typing import Dict, List, Any, Union
+from typing import Dict, List, Any, Union, TypeVar
+
+T = TypeVar('T', Dict[str, str], List[Dict[str, str]])
 
 
 class CSVModel:
@@ -9,8 +11,19 @@ class CSVModel:
         self._rows = rows
 
     @classmethod
-    def create_from_dict(cls, content: Dict[str, str]) -> 'CSVModel':
-        return CSVModel(list(content.keys()), [list(content.values())])
+    def create_from_dict(cls, content: T) -> 'CSVModel':
+        header_: List[str] = []
+        rows_: List[List[str]] = []
+
+        if isinstance(content, dict):
+            header_ = list(content.keys())
+            rows_ = [list(content.values())]
+
+        elif isinstance(content, list):
+            header_ = list(content[0].keys())
+            rows_ = [list(vs.values()) for vs in content]
+
+        return CSVModel(header_, rows_)
 
 
 def save_csv(file_path: str,
