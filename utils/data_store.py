@@ -10,7 +10,7 @@ class CSVModel:
 
     @classmethod
     def create_from_dict(cls, content: Dict[str, str]) -> 'CSVModel':
-        return CSVModel(content.keys(), [content.values()])
+        return CSVModel(list(content.keys()), [list(content.values())])
 
 
 def save_csv(file_path: str,
@@ -25,8 +25,8 @@ def save_csv(file_path: str,
     with open(file_path, mode, newline='') as f:
         f_csv = csv.writer(f)
 
-        real_headers = headers or model._headers
-        real_rows = rows or model._rows
+        real_headers: List[str] = headers or model._headers if model else ['']
+        real_rows: List[List[Any]] = rows or model._rows if model else [[]]
 
         if not is_exists:
             f_csv.writerow(real_headers)

@@ -132,3 +132,5 @@ dmypy.json
 .pytest_cache/
 data/
 locale_settings.py
+
+celerybeat-schedule.db

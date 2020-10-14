@@ -1,9 +1,9 @@
 import requests
 from typing import Union, Dict, Any
-from utils import get_logger, get_header, parser_first_text_or_content_if_could
+import utils
 from lxml import etree
 
-logger = get_logger(__name__)
+logger = utils.get_logger(__name__)
 
 
 def ensure_dict(content: Any) -> Dict[str, Any]:
@@ -15,7 +15,7 @@ def ensure_dict(content: Any) -> Dict[str, Any]:
         return {'content': content}
 
 
-def get_caihongpi_info() -> Union[str, None]:
+def get_caihongpi_info() -> Union[Dict[str, str], None]:
     """
     从彩虹屁获得信息
     url:: https://chp.shadiao.app/api.php
@@ -60,8 +60,10 @@ def get_hitokoto_info() -> Union[Dict[str, str], None]:
         url: str = 'https://v1.hitokoto.cn/'
         params: Dict[str, str] = {'encode': 'json'}
         resp = requests.get(url, params=params)
-        if resp.status_code == 200:
-            return resp.json()
+        if resp.status_code != 200:
+            return None
+        result = resp.json()
+        return result
     except requests.exceptions.RequestException as exception:
         logger.debug(exception)
         return None
@@ -83,25 +85,25 @@ def get_lovelive_info() -> Union[Dict[str, str], None]:
         return None
 
 
-def get_wufazhuce_info() -> Dict[str, str]:
+def get_wufazhuce_info() -> Union[Dict[str, str], None]:
     """
     http://wufazhuce.com/
     """
     user_url = 'http://wufazhuce.com/'
     try:
-        resp = requests.get(user_url, headers=get_header())
+        resp = requests.get(user_url, headers=utils.get_header())
         if resp.status_code != 200:
             return None
         html = etree.HTML(resp.text)
         result: Dict[str, str] = {}
 
-        content: str = parser_first_text_or_content_if_could(
-            html, '//*[@id="carousel-one"]/div/div[1]/div[2]/div[2]/a')
-        image: str = parser_first_text_or_content_if_could(
-            html, '//*[@id="carousel-one"]/div/div[1]/a/img/@src')
+        if content := utils.parser_first_text_or_content_if_could(
+                html, '//*[@id="carousel-one"]/div/div[1]/div[2]/div[2]/a'):
+            result.setdefault('content', content)
 
-        result.setdefault('content', content)
-        result.setdefault('image', image)
+        if image := utils.parser_first_text_or_content_if_could(
+                html, '//*[@id="carousel-one"]/div/div[1]/a/img/@src'):
+            result.setdefault('image', image)
 
         return result
 
