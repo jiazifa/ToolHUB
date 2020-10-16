@@ -35,7 +35,7 @@ CELERYBEAT_SCHEDULE = {
     },
     'acib.fetch': {
         'task': 'celery_tasks.one_word.acib',
-        'schedule': timedelta(seconds=60),
+        'schedule': timedelta(seconds=60 * 60 * 24),
         'args': ()
     },
     'hitokoto.fetch': {
