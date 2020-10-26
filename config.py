@@ -1,6 +1,6 @@
 import os
 
-REDIS_URI = os.environ.get("REDIS_URI", "redis://0.0.0.0:6379/")
+REDIS_URI = os.environ.get("REDIS_URI", "redis://redis:6379/")
 """Celery 配置"""
 
 CELERY_RESULT_BACKEND = REDIS_URI

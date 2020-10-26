@@ -1,0 +1,27 @@
+version: '3'
+
+services: 
+    redis:
+        image: redis
+        restart: "${DOCKER_RESTART_POLICY:-unless-stopped}"
+        stop_grace_period: "${DOCKER_STOP_GRACE_PERIOD:-3s}"
+        hostname: 'redis'
+        ports:
+            - 6379 # 端口不暴露给主机，只暴露给其他服务。
+        
+    celery-worker:
+        build: .
+        depends_on: 
+            - redis
+        volumes:
+            - ~/tool-hub-data:/app/disk
+        command: 'celery -A celery_worker.app worker --loglevel=INFO -E'
+
+    celery-beat:
+        build: .
+        depends_on: 
+            - redis
+        command: 'celery beat'
+
+networks: 
+    toolhub:
