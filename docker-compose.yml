@@ -21,7 +21,7 @@ services:
         build: .
         depends_on: 
             - redis
-        command: 'celery beat'
+        command: 'celery beat -A celery_worker'
 
 networks: 
     toolhub:
