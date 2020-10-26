@@ -133,4 +133,4 @@ dmypy.json
 data/
 locale_settings.py
 
-celerybeat-schedule.db
+celerybeat-schedule.*
