@@ -35,7 +35,7 @@ def save_csv(file_path: str,
     is_exists: bool = True if os.path.exists(file_path) else False
 
     mode: str = 'a+' if is_exists else 'w'
-    with open(file_path, mode, newline='') as f:
+    with open(file_path, mode, newline='', encoding='utf-8') as f:
         f_csv = csv.writer(f)
 
         real_headers: List[str] = headers or model._headers if model else ['']

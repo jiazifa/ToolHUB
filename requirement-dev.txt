@@ -1,8 +1,9 @@
 ## The following requirements were added by pip freeze:
-celery==5.0.0
-lxml==4.5.2
-requests==2.24.0
+celery==4.4.2
+lxml
+requests
 mypy
 flake8
 pytest
 redis
+feedparser

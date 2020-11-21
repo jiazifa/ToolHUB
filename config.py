@@ -1,4 +1,5 @@
 import os
+from typing import List
 
 REDIS_URI = os.environ.get("REDIS_URI", "redis://redis:6379/")
 """Celery 配置"""
@@ -54,6 +55,11 @@ CELERYBEAT_SCHEDULE = {
         'args': ()
     }
 }
+
+
+RSS_SOUECES: List[str] = [
+    "https://www.zhihu.com/rss",
+]
 
 try:
     from locale_settings import *  # noqa
