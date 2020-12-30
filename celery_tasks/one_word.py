@@ -1,9 +1,8 @@
 from typing import Callable, Dict
 import config
 from celery_tasks import celery_app
-from celery_tasks.helpers import map_to_csvmodel, save_csv_file
+from celery_tasks.helpers import map_to_csvmodel, save_csv_file, post_url
 from hub.one_word import get_caihongpi_info, get_acib_info, get_hitokoto_info, get_lovelive_info, get_wufazhuce_info
-from helpers import post_url
 
 SITE: str = getattr(config, "SITE_URL")
 

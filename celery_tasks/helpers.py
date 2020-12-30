@@ -4,7 +4,7 @@ from requests import Response
 import utils
 from celery_tasks import celery_app
 
-__all__ = ['map_to_csvmodel', 'save_csv_file']
+__all__ = ['map_to_csvmodel', 'save_csv_file', 'post_url', 'get_url']
 
 
 @celery_app.task
